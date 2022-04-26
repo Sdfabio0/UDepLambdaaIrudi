@@ -7,6 +7,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import re
 import nltk
+import spacy_merge_phrases
 nltk.download('punkt')
 
 path = '/home/fabrice/Documents/UDepLambda'
@@ -58,18 +59,26 @@ app = FastAPI()
 
 @app.get("/")
 def root():
-    sent_file = 'input-english.txt'
+    with open('input-english.txt','r') as f:
+       line  = f.readline()
+    dic_sent = json.loads(line)
+    sentence = dic_sent['sentence']
+    sent = spacy_merge_phrases.generate_noun_phrase_sent(sentence)
+    print(sent)
+    with open('input-english2.txt','w') as f:
+        f.write(r'{"sentence":"'+sent+r'"}')
+        f.write('\n')
+    sent_file = 'input-english2.txt'
     output = 'output.json'
     #preprocessing of the sentence into a JSON file
-    command = 'cat input-english.txt | sh run-english.sh > output.json'
+    command = 'cat '+ sent_file +' | sh run-english.sh > '+ output
     os.system(command)
-
     # importing the dictionary
     # Opening JSON file
     with open('output.json') as json_file:
-        dic_work = json.load(json_file)     
+        dic_work = json.load(json_file)   
     return dic_work
-    
+
 @app.post("/logic_graph")
 def logic_graph_processing(sent):
     true = True
