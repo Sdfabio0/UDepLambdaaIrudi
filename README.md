@@ -14,7 +14,7 @@ UDepLambda is a framework to convert Universal Dependencies trees to Logical For
 Run the following commands in a terminal:
 
     git clone https://github.com/sivareddyg/UDepLambda.git
-    cd UDepLambda
+    cd UDepLambdaaIrudi 
     git submodule update --init --recursive lib
     git submodule update --init --recursive lib_data/ud-models-v1.3
     git submodule update --init --recursive lib_data/ud-models-v1.2
