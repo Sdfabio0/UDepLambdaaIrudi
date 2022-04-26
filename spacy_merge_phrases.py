@@ -1,6 +1,8 @@
 import spacy
 import nltk
+import os
 
+os.system('python3 -m spacy download en_core_web_sm')
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -58,8 +60,4 @@ def generate_noun_phrase_sent(phrase):
         if s in puncts:
             sent  = sent[:idx-1] + sent[idx:]
         idx+=1
-
-    with open('input-english2.txt','w') as f:
-        f.write(r'{"sentence":"'+sent+r'"}')
-        f.write('\n')
-    return
+    return sent
